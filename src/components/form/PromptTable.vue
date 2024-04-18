@@ -2,16 +2,16 @@
   <div class="prompt-table-div">
     <el-row class="prompt-table-header-btns">
       <el-col :span="3">
-        <el-button @click="promptFormVisiable = true" type="primary" size="large">
+        <el-button @click="openAddForm" type="primary" size="large">
           <el-text class="mx-1">{{ t("promptTable.headerBtns.addBtn.text") }}</el-text>
         </el-button>
       </el-col>
-      <el-col :span="3" :offset="3">
+      <el-col :span="3" :offset="4">
         <el-popconfirm
           width="250"
-          :title="t('promptTable.headerBtns.confirmClear.title')"
-          :confirm-button-text="t('promptTable.headerBtns.confirmClear.confirmBtnText')"
-          :cancel-button-text="t('promptTable.headerBtns.confirmClear.cancelBtnText')"
+          :title="t('promptTable.headerBtns.clearBtn.confirmClear.title')"
+          :confirm-button-text="t('promptTable.headerBtns.clearBtn.confirmClear.confirmBtnText')"
+          :cancel-button-text="t('promptTable.headerBtns.clearBtn.confirmClear.cancelBtnText')"
           @confirm="handleClear"
         >
           <template #reference>
@@ -24,7 +24,7 @@
     </el-row>
     <el-table :data="prompts" :empty-text="t('promptTable.table.noDataText')" :with-header="false" class="prompt-table">
       <el-table-column property="name" :label="t('promptTable.table.columnPromptName')" />
-      <el-table-column :label="t('promptTable.table.columnAction')" width="260">
+      <el-table-column :label="t('promptTable.table.columnAction')" width="200">
         <template #default="scope">
           <el-button class="right-setting-action-btn" @click="openUpdateForm(scope.row)" type="primary">{{ t("promptTable.table.editText") }}</el-button>
           <el-popconfirm
@@ -75,8 +75,6 @@ import { useI18n } from "vue-i18n";
 // 脚本引入
 import { usePrompt } from "../../utils/promptUtils.ts";
 import { showNotification } from "../../utils/commonUtils.ts";
-// 配置引入
-import { getPromptForm, getPromptFormRules } from "../../config/promptConfig.ts";
 
 // 118n对象
 const { t, locale } = useI18n();
@@ -91,9 +89,9 @@ const promptFormVisiable = ref(false);
 // 提示词表单项label宽度
 const formLabelWidth = "60px";
 // 提示词表单对象
-const promptForm = ref();
+const promptForm = ref({ name: "", content: "" });
 // 提示词表单默认数据
-const promptFormDefault = ref();
+const promptFormDefault = ref({ name: "", content: "" });
 // 提示词表单规则
 const promptFormRules = ref();
 // 提示词表单更新ID
@@ -106,13 +104,22 @@ const closeForm = () => {
   promptFormRef.value && promptFormRef.value.resetFields();
   promptFormUpdateId.value = null;
   promptForm.value = promptFormDefault.value;
+  promptFormRules.value = {};
+};
+
+/**
+ * 打开新增表单
+ */
+const openAddForm = () => {
+  promptFormRules.value = getPromptFormRules();
+  promptFormVisiable.value = true;
 };
 
 /**
  * 打开更新表单
  * @param row
  */
-const openUpdateForm = async (row: any) => {
+const openUpdateForm = (row: any) => {
   promptForm.value = row;
   promptFormUpdateId.value = row.id;
   promptFormVisiable.value = true;
@@ -191,12 +198,25 @@ const handleClear = async () => {
 };
 
 /**
+ * 获取prompt form规则
+ */
+const getPromptFormRules = () => {
+  return {
+    name: [
+      { required: true, message: `${t("promptConfig.formRules.nameMessage.required")}`, trigger: "blur" },
+      { min: 1, max: 20, message: `${t("promptConfig.formRules.nameMessage.minMax")}`, trigger: "blur" },
+    ],
+    content: [
+      { required: true, message: `${t("promptConfig.formRules.contentMessage.required")}`, trigger: "blur" },
+      { min: 1, max: 4000, message: `${t("promptConfig.formRules.contentMessage.minMax")}`, trigger: "blur" },
+    ],
+  };
+};
+
+/**
  * onMounted
  */
 onMounted(() => {
-  promptForm.value = getPromptForm();
-  promptFormDefault.value = getPromptForm();
-  promptFormRules.value = getPromptFormRules();
   refreshPrompts();
 });
 </script>

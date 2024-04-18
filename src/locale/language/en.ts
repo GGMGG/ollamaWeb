@@ -28,6 +28,7 @@ export default {
             title: "please enter the model name",
             confirmBtnText: "confirm",
             cancelBtnText: "cancel",
+            warnText: "please enter the model name to pull",
           },
           pullSuccess: "pull model completed",
         },

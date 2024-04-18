@@ -2,7 +2,7 @@
   <div>
     <span v-if="label">{{ label }}</span>
     <br />
-    <el-radio-group v-model="radioValue" size="large" @change="$emit('update:modelValue', radioValue)" fill="#2454ff">
+    <el-radio-group v-model="radioValue" @change="$emit('update:modelValue', radioValue)" fill="#2454ff">
       <el-radio-button :label="t('textRadio.yes')" :value="true" />
       <el-radio-button :label="t('textRadio.no')" :value="false" />
     </el-radio-group>

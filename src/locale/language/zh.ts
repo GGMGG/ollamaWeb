@@ -28,6 +28,7 @@ export default {
             title: "请输入模型名称",
             confirmBtnText: "确认",
             cancelBtnText: "取消",
+            warnText: "请输入要获取的模型名称",
           },
           pullSuccess: "获取模型完成",
         },

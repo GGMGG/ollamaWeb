@@ -1,5 +1,5 @@
 <template>
-  <div class="user-message" :class="{ 'user-message-light': !isDarkMode }">
+  <div class="user-message">
     <div class="user-message-avatar">
       <el-avatar :src="avatar" fit="scale-down" />
     </div>
@@ -42,7 +42,4 @@ const { message } = defineProps<{
   }
 }
 
-.user-message-light {
-  background-color: #fff;
-}
 </style>

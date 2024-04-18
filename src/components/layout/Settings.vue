@@ -13,17 +13,17 @@
     <!-- 中间操作按钮 -->
     <div class="right-setting-action-btns-div">
       <el-row>
-        <el-col :span="24">
+        <el-col :span="12">
           <el-button @click="modelTableVisiable = true" class="right-setting-action-btn" type="primary" size="large" :disabled="!available">
             <el-text class="mx-1" size="large">{{ t("settings.btns.modelList") }}</el-text>
           </el-button>
         </el-col>
-        <el-col :span="24">
+        <el-col :span="12">
           <el-button @click="promptTableVisiable = true" class="right-setting-action-btn" type="primary" size="large" :disabled="!available">
             <el-text class="mx-1" size="large">{{ t("settings.btns.promptList") }}</el-text>
           </el-button>
         </el-col>
-        <el-col :span="24">
+        <el-col :span="12">
           <el-button
             @click="doPullModel"
             class="right-setting-action-btn"
@@ -35,7 +35,7 @@
             <el-text class="mx-1" size="large">{{ t("settings.btns.pullModel.text") }}</el-text>
           </el-button>
         </el-col>
-        <el-col :span="24">
+        <el-col :span="12">
           <el-popconfirm
             width="250"
             :title="t('settings.btns.clearChats.confirmClear.title')"
@@ -65,11 +65,11 @@
     </div>
   </div>
   <!-- 全部模型抽屉 -->
-  <el-drawer v-model="modelTableVisiable" direction="rtl" :show-close="false" size="25%">
+  <el-drawer v-model="modelTableVisiable" direction="rtl" :show-close="false" size="26%">
     <ModelTable />
   </el-drawer>
   <!-- 全部prompt抽屉 -->
-  <el-drawer v-model="promptTableVisiable" direction="rtl" :show-close="false" size="30%">
+  <el-drawer v-model="promptTableVisiable" direction="rtl" :show-close="false" size="26%">
     <PromptTable />
   </el-drawer>
 </template>
@@ -156,6 +156,11 @@ const doPullModel = () => {
   ElMessageBox.prompt(`${t("settings.btns.pullModel.elMessageBox.title")}`, "", {
     confirmButtonText: `${t("settings.btns.pullModel.elMessageBox.confirmBtnText")}`,
     cancelButtonText: `${t("settings.btns.pullModel.elMessageBox.cancelBtnText")}`,
+    inputValidator: (value: string) => {
+      if (!value) {
+        return `${t("settings.btns.pullModel.elMessageBox.warnText")}`;
+      }
+    },
   })
     .then(({ value }) => {
       pullModelBtnDisabled.value = true;
@@ -216,8 +221,8 @@ onMounted(() => {});
 <style lang="less" scoped>
 .right-setting {
   .right-setting-heade-btns {
-    width: 74%;
-    padding-left: 13%;
+    width: 80%;
+    padding-left: 5%;
     padding-top: 2px;
     display: inline-flex;
     align-items: center;
@@ -245,10 +250,10 @@ onMounted(() => {});
     padding: 2% 3% 2% 3%;
 
     .right-setting-action-btn {
-      width: 80%;
+      width: 90%;
       padding: 1%;
-      margin-left: 10%;
-      margin-bottom: 4%;
+      margin-left: 5%;
+      margin-bottom: 5%;
       border-radius: 8px;
       background: #2454ff;
       cursor: pointer;

@@ -31,6 +31,8 @@ const { message } = defineProps<{
   justify-content: start;
   padding: 1%;
   width: 96%;
+  border-radius: 10px;
+  background-color: #1d1d1d;
 
   .ai-message-avatar {
     width: 32px;
