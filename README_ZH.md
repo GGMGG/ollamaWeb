@@ -1,20 +1,20 @@
-## a web application for chatting with local LLMs by ollama API
+## 一个通过ollama API与本地LLMs聊天的小工具
 
-[CHINESE README](./README_ZH.md)  
-[ENGILSH README](./README.md)
+[中文说明](./README_ZH.md)  
+[英文说明](./README.md)
 
 ![](./public/readMeImages/1.png)
 ![](./public/readMeImages/2.png)
 
-## install and use ollama
+## 安装并使用ollama
 
 - [ollama homepage](https://ollama.com/)
 - download and install [ollama CLI](https://ollama.ai/download)
 
-## getting started
-- clone this repository
-- use npm install && run dev
-- use cmd to run ollama
+## 开始
+- 克隆代码
+- 运行npm install安装依赖，运行npm run dev运行网页
+- 根据不同平台执行不同的cmd脚本，在本地运行ollama服务
 
 ```
 git clone https://github.com/GGMGG/ollamaWeb.git
@@ -26,7 +26,7 @@ npm run dev
 ollama serve
 ```
 
-## built with
+## 构建
 
 - [Ollama.ai](https://ollama.ai/)
 - [Vue.js](https://vuejs.org/)
@@ -35,12 +35,12 @@ ollama serve
 - [VueI18n](https://vue-i18n.intlify.dev/)
 - [element-plus](https://element-plus.org/)
 
-## learn from
+## 学习项目
 
 - [ollama-gui](https://github.com/HelgeSverre/ollama-gui/)
 
 ---
 
-## license
+## 许可证
 
-Licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+在MIT许可证下授权。有关详细信息，请参阅[LICENSE](./LICENSE)文件。

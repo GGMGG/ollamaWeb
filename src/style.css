@@ -1,0 +1,80 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 全局样式 */
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+
+  /* 滚动条 */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 滚动槽 */
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+
+  /* 滚动条滑块 */
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+}
+
+/* element样式覆盖 */
+.el-button--primary {
+  --el-button-bg-color: #2454ff !important;
+  --el-button-border-color: #2454ff !important;
+  --el-button-hover-bg-color: #163ecd !important;
+  --el-button-hover-border-color: #163ecd !important;
+}
+
+.el-notification {
+  .el-notification__group {
+    word-break: break-all;
+  }
+}
+
+.el-select-dropdown__item {
+  font-family: PingFang SC;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.right-setting {
+  .el-drawer {
+    .el-drawer__header {
+      display: none !important;
+    }
+  }
+}
+
+/* 动效 */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
+  }
+}
+
+.icon-rotate {
+  animation: rotate 1s linear infinite;
+}
