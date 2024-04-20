@@ -20,7 +20,8 @@
     "markdown-it-highlightjs": "^4.0.1",
     "uuid": "^9.0.1",
     "vue": "^3.4.21",
-    "vue-i18n": "^9.12.1"
+    "vue-i18n": "^9.12.1",
+    "vue-clipboard3": "^2.0.0"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.5",

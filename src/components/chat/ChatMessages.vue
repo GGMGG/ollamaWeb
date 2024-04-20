@@ -1,6 +1,6 @@
 <template>
   <div ref="chatElement" class="chat-messages">
-    <ChatMessage v-for="message in visibleMessages" :message="message" />
+    <ChatMessage v-for="message in visibleMessages" :message="message" @clickUserMessage="clickUserMessageBox" />
   </div>
 </template>
 
@@ -10,6 +10,9 @@ import { computed, nextTick, onMounted, onUnmounted, onUpdated, ref, watch } fro
 import { useChats } from "../../utils/chatUtils.ts";
 // 组件引入
 import ChatMessage from "./ChatMessage.vue";
+
+// 定义emit
+const emit = defineEmits<{}>();
 
 // message type
 const { messages } = useChats();
@@ -48,6 +51,14 @@ const scrollToBottom = () => {
   nextTick(() => {
     chatElement.value && (chatElement.value.scrollTop = chatElement.value.scrollHeight - chatElement.value.clientHeight);
   });
+};
+
+/**
+ * 用户消息单击事件
+ * @param content
+ */
+const clickUserMessageBox = (content: string) => {
+  emit("clickUserMessageBox", content);
 };
 
 /**

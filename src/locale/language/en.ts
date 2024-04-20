@@ -58,9 +58,15 @@ export default {
     },
     chatMessage: {},
     chatMessages: {},
-    aiMessage: {},
+    aiMessage: {
+      markDownTitle: "click to copy to clipboard",
+      copySucccess: "copy success",
+      copyFailed: "copy failed",
+    },
     systemMessage: {},
-    userMessage: {},
+    userMessage: {
+      markDownTitle: "click to copy to chatinput",
+    },
     modelSelector: {
       selectPlaceholder: "please choose model",
       noMatchText: "no match data",

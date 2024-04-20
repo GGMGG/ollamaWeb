@@ -1,6 +1,6 @@
 <template>
   <SystemMessage v-if="message.role == 'system'" :message="message" />
-  <UserMessage v-if="message.role == 'user'" :message="message" />
+  <UserMessage v-if="message.role == 'user'" :message="message" @clickUserMessageEvent="clickUserMessage" />
   <AiMessage v-if="message.role == 'assistant'" :message="message" />
 </template>
 
@@ -17,5 +17,16 @@ type Props = {
   message: Message;
 };
 
+// 定义消息对象
 const { message } = defineProps<Props>();
+// 定义emit
+const emit = defineEmits<{}>();
+
+/**
+ * 用户消息单击事件
+ * @param content 
+ */
+const clickUserMessage = (content: string) => {
+  emit("clickUserMessage", content);
+};
 </script>

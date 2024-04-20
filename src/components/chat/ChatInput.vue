@@ -92,6 +92,14 @@ const onStop = () => {
 };
 
 /**
+ * 设置输入框的值
+ * @param inputValue
+ */
+const setInputValue = (inputValue: string) => {
+  userInput.value = inputValue.trim();
+};
+
+/**
  * 监听enter键敲下
  * @param event
  */
@@ -115,6 +123,13 @@ const onKeydown = (event: KeyboardEvent) => {
 const shouldSubmit = ({ key, shiftKey }: KeyboardEvent): boolean => {
   return key === "Enter" && !shiftKey;
 };
+
+/**
+ * defineExpose
+ */
+defineExpose({
+  setInputValue,
+});
 </script>
 
 <style lang="less" scoped>

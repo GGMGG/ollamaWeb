@@ -3,14 +3,14 @@
     <div class="user-message-avatar">
       <el-avatar :src="avatar" fit="scale-down" />
     </div>
-    <Markdown :source="message.content" class="user-message-markdown" />
+    <Markdown :source="message.content" class="user-message-markdown" @click="copyMessage" :title="t('userMessage.markDownTitle')" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 // 图标引入
 import avatar from "../../assets/avatar.png";
-
 // 数据引入
 import { isDarkMode } from "../../utils/database/localStorage.ts";
 // 对象类型引入
@@ -22,6 +22,18 @@ import Markdown from "./Markdown.ts";
 const { message } = defineProps<{
   message: Message;
 }>();
+// 定义emit
+const emit = defineEmits<{}>();
+
+// 118n对象
+const { t, locale } = useI18n();
+
+/**
+ * 单击事件
+ */
+const copyMessage = () => {
+  emit("clickUserMessageEvent", message.content);
+};
 </script>
 
 <style lang="less" scoped>
@@ -39,7 +51,7 @@ const { message } = defineProps<{
 
   .user-message-markdown {
     margin-left: 20px;
+    cursor: pointer;
   }
 }
-
 </style>

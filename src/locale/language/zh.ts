@@ -44,8 +44,8 @@ export default {
       settingText: "设置",
       settingForm: {
         ollamaApiUrl: "ollamaApi地址",
-        streamResponse: "是否stream流响应",
-        withHistory: "是否携带历史记录",
+        streamResponse: "stream流响应",
+        withHistory: "携带历史记录",
         numCtx: "num_ctx配置",
         seed: "seed配置",
         topK: "top_k配置",
@@ -58,9 +58,15 @@ export default {
     },
     chatMessage: {},
     chatMessages: {},
-    aiMessage: {},
+    aiMessage: {
+      markDownTitle: "点击复制到剪切板",
+      copySucccess: "复制成功",
+      copyFailed: "复制失败",
+    },
     systemMessage: {},
-    userMessage: {},
+    userMessage: {
+      markDownTitle: "点击复制到对话框",
+    },
     modelSelector: {
       selectPlaceholder: "请选择模型",
       noMatchText: "暂无匹配数据",

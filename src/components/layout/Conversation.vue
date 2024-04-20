@@ -16,12 +16,12 @@
       </el-row>
       <el-row class="conversation-container-active-middle" :class="{ 'conversation-container-active-middle-light': !isDarkMode }">
         <el-col :span="24">
-          <ChatMessages />
+          <ChatMessages @clickUserMessageBox="copyUserMesaage" />
         </el-col>
       </el-row>
       <el-row class="conversation-container-active-footer">
         <el-col :span="22">
-          <ChatInput />
+          <ChatInput ref="userChatInput" />
         </el-col>
       </el-row>
     </div>
@@ -54,6 +54,9 @@ import ModelSelector from "../form/ModelSelector.vue";
 import PromptSelector from "../form/PromptSelector.vue";
 import TextInput from "../form/TextInput.vue";
 
+// 定义emit
+const emit = defineEmits<{}>();
+
 // 118n对象
 const { t, locale } = useI18n();
 // apiUrl对象
@@ -69,8 +72,10 @@ const { warning } = showMessage();
 const available = ref(false);
 // 是否在编辑对话名称
 const isEditingChatName = ref(false);
-// 编辑中的对话变成
+// 编辑中的对话名称
 const editedChatName = ref("");
+// chatinput对象
+const userChatInput = ref();
 
 /**
  * 编辑
@@ -101,6 +106,14 @@ const confirmRename = () => {
     renameChat(editedChatName.value);
     isEditingChatName.value = false;
   }
+};
+
+/**
+ * 用户消息单击事件
+ * @param content
+ */
+const copyUserMesaage = (content: string) => {
+  userChatInput.value.setInputValue(content);
 };
 
 /**
