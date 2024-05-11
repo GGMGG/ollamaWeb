@@ -24,7 +24,7 @@ const emit = defineEmits<{}>();
 
 /**
  * 用户消息单击事件
- * @param content 
+ * @param content
  */
 const clickUserMessage = (content: string) => {
   emit("clickUserMessage", content);

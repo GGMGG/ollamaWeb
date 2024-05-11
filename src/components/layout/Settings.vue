@@ -75,6 +75,9 @@
         <el-col :span="12">
           <TextInput :label="t('settings.settingForm.topP')" v-model="topP" type="number" class="right-setting-form-input right-setting-form-input-wd9" />
         </el-col>
+        <el-col :span="12">
+          <TextInput :label="t('settings.settingForm.uploadImagesLimit')" v-model="uploadImagesLimit" type="number" class="right-setting-form-input right-setting-form-input-wd9" />
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -103,7 +106,7 @@ import { useAI } from "../../utils/api/useAI.ts";
 import { PullModelResponse, useApi } from "../../utils/api/useApi.ts";
 import { showNotification } from "../../utils/commonUtils.ts";
 // 数据引入
-import { language, isDarkMode, baseUrl, isStream, withHistory, numCtx, seed, topK, topP } from "../../utils/database/localStorage.ts";
+import { language, isDarkMode, baseUrl, isStream, withHistory, numCtx, seed, topK, topP, uploadImagesLimit } from "../../utils/database/localStorage.ts";
 import { languageTypes } from "../../config/languaguConfig.ts";
 import { globalConfig } from "../../config/globalConfig.ts";
 // 组件引入
@@ -155,7 +158,7 @@ const changeLang = () => {
 };
 
 /**
- * 打开给git地址
+ * 打开git地址
  */
 const openGitHub = () => {
   if (globalConfig.projectUrl || globalConfig.homepage) {

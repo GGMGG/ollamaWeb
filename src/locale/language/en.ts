@@ -50,14 +50,24 @@ export default {
         seed: "seed",
         topK: "top_k",
         topP: "top_p",
+        uploadImagesLimit: "upload file limit"
       },
     },
     chatInput: {
-      stopChat: "stop send",
+      stopChat: "stop generating",
       warnText: "please enter your question or request",
+      confirmDelete: {
+        title: "delete picture",
+        confirmBtnText: "confirm delete",
+        cancelBtnText: "cancel",
+      },
+      overLimit: "upload over limit",
+      uploadTypeError: "file type error, please upload images",
     },
     chatMessage: {},
-    chatMessages: {},
+    chatMessages: {
+      aiRespondingMessage: "generating, please wait...",
+    },
     aiMessage: {
       markDownTitle: "click to copy to clipboard",
       copySucccess: "copy success",

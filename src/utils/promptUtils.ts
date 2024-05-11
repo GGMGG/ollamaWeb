@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 import i18n from "../locale/index.ts";
 import { Prompt } from "./database/indexDB.ts";

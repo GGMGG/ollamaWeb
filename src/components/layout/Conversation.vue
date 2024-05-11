@@ -16,12 +16,12 @@
       </el-row>
       <el-row class="conversation-container-active-middle" :class="{ 'conversation-container-active-middle-light': !isDarkMode }">
         <el-col :span="24">
-          <ChatMessages @clickUserMessageBox="copyUserMesaage" />
+          <ChatMessages ref="chatMessages" @clickUserMessageBox="copyUserMesaage" />
         </el-col>
       </el-row>
       <el-row class="conversation-container-active-footer">
         <el-col :span="22">
-          <ChatInput ref="userChatInput" />
+          <ChatInput ref="userChatInput"/>
         </el-col>
       </el-row>
     </div>
@@ -76,6 +76,8 @@ const isEditingChatName = ref(false);
 const editedChatName = ref("");
 // chatinput对象
 const userChatInput = ref();
+// chatMessages对象
+const chatMessages = ref();
 
 /**
  * 编辑

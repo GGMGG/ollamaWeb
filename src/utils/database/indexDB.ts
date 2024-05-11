@@ -24,8 +24,10 @@ export interface Message {
   chatId: number;
   role: ChatRole;
   content: string;
+  images?: string[];
   meta?: any;
   context?: number[];
+  desc?: any;
   createdAt: Date;
 }
 
@@ -64,7 +66,7 @@ class ChatDatabase extends Dexie {
     super("ChatDatabase");
     this.version(1).stores({
       chats: "++id,name,model,prompt,createdAt",
-      messages: "++id,chatId,role,content,meta,context,createdAt",
+      messages: "++id,chatId,role,content,images,meta,context,desc,createdAt",
       prompts: "++id,name,content",
     });
 

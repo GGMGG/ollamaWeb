@@ -1,5 +1,4 @@
 import { useLocalStorage } from "@vueuse/core";
-import { computed } from "vue";
 
 // 语言
 export const language = useLocalStorage("language", "zh");
@@ -19,3 +18,5 @@ export const seed = useLocalStorage("seed", 0);
 export const topK = useLocalStorage("topK", 40);
 // top_p配置，与 top_k 配合使用。较高的值（例如，0.95）将导致更多样化的文本，而较低的值（例如，0.5）将生成更集中和保守的文本。（默认值：0.9）
 export const topP = useLocalStorage("topP", 0.9);
+// 图片上传最大限制配置
+export const uploadImagesLimit = useLocalStorage("uploadImagesLimit", 3);

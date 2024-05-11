@@ -49,6 +49,28 @@ export const groupArr = (list: Record<any, any>, field: string) => {
 };
 
 /**
+ * 图片转base64
+ */
+export const getBase64 = (file: any) => {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+    let fileResult = "";
+    reader.readAsDataURL(file.raw);
+    reader.onload = function () {
+      fileResult = reader.result;
+    };
+
+    reader.onerror = function (error) {
+      reject(error);
+    };
+
+    reader.onloadend = function () {
+      resolve(fileResult);
+    };
+  });
+};
+
+/**
  * elmessage二次封装
  */
 export const showMessage = () => {

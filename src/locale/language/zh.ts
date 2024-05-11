@@ -50,14 +50,24 @@ export default {
         seed: "seed配置",
         topK: "top_k配置",
         topP: "top_p配置",
+        uploadImagesLimit: "文件上传限制"
       },
     },
     chatInput: {
-      stopChat: "停止发送",
+      stopChat: "停止生成",
       warnText: "请输入你的问题或需求",
+      confirmDelete: {
+        title: "删除图片",
+        confirmBtnText: "确认删除",
+        cancelBtnText: "取消",
+      },
+      overLimit: "超出限制",
+      uploadTypeError: "文件格式错误，请上传图片",
     },
     chatMessage: {},
-    chatMessages: {},
+    chatMessages: {
+      aiRespondingMessage: "正在努力生成，请稍等...",
+    },
     aiMessage: {
       markDownTitle: "点击复制到剪切板",
       copySucccess: "复制成功",

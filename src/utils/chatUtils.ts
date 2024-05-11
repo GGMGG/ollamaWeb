@@ -28,6 +28,11 @@ const messages = ref<Message[]>([]);
  */
 const ongoingAiMessages = ref<Map<number, Message>>(new Map());
 
+/**
+ * ai是否正在响应
+ */
+const isAiResponding = ref(false);
+
 // 118n对象
 const { t } = i18n.global;
 
@@ -39,12 +44,35 @@ export function useChats() {
   const { getPromptById } = usePrompt();
   const { abort } = useApi();
 
+  /**
+   * 根据时间排序
+   */
   const sortedChats = computed<Chat[]>(() => [...chats.value].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+
+  /**
+   * 是否有对话
+   */
   const hasActiveChat = computed(() => activeChat.value !== null);
+
+  /**
+   * 是否有消息
+   */
   const hasMessages = computed(() => messages.value.length > 0);
 
+  /**
+   * 设置当前对话
+   */
   const setActiveChat = (chat: Chat) => (activeChat.value = chat);
+
+  /**
+   * 设置消息
+   */
   const setMessages = (newMessages: Message[]) => (messages.value = newMessages);
+
+  /**
+   * 设置是否响应
+   */
+  const setIsAiResponding = (isResponding: boolean) => (isAiResponding.value = isResponding);
 
   /**
    * 初始化
@@ -164,7 +192,7 @@ export function useChats() {
   /**
    * 添加用户的信息
    */
-  const addUserMessage = async (content: string) => {
+  const addUserMessage = async (content: string, images: string[], desc: any) => {
     if (!activeChat.value) {
       console.warn("no chat choose");
       return;
@@ -176,6 +204,8 @@ export function useChats() {
       chatId: currentChatId,
       role: "user",
       content,
+      images,
+      desc,
       createdAt: new Date(),
     };
 
@@ -286,6 +316,7 @@ export function useChats() {
    * 处理未完成的响应
    */
   const handleGenerateChatOnMessage = (data: GenerateChatCompletionResponse, chatId: number) => {
+    isAiResponding.value = false;
     const content = data?.message?.content;
     ongoingAiMessages.value.has(chatId) ? appendToAssistantMessage(content, chatId) : addAssistantMessage(true, content, chatId);
   };
@@ -297,6 +328,7 @@ export function useChats() {
     // 非流式响应处理
     if (!isStream) {
       try {
+        isAiResponding.value = false;
         const content = data?.message?.content;
         content && addAssistantMessage(isStream, content, chatId);
       } catch (error) {
@@ -367,21 +399,24 @@ export function useChats() {
 
   return {
     chats,
-    sortedChats,
     activeChat,
     messages,
-    hasMessages,
+    isAiResponding,
+    sortedChats,
     hasActiveChat,
-    renameChat,
+    hasMessages,
+    setIsAiResponding,
+    initialize,
+    switchChat,
     switchModel,
     switchPrompt,
+    renameChat,
     startNewChat,
-    switchChat,
-    deleteChat,
-    addUserMessage,
     addSystemMessage,
-    initialize,
+    addUserMessage,
+    addAssistantMessage,
     wipeDatabase,
+    deleteChat,
     abort,
   };
 }
