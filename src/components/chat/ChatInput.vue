@@ -148,8 +148,9 @@ const onPost = () => {
   // 记录图片类型备注
   let imagesDesc = [];
   uploadFileList.value.forEach((file) => {
-    sendImages.push(file.content.substring(file.content.indexOf("base64,") + 7));
-    imagesDesc.push(file.content.substring(0, file.content.indexOf("base64,") + 7));
+    const spliceIndex = file.content.indexOf("base64,") + 7;
+    sendImages.push(file.content.substring(spliceIndex));
+    imagesDesc.push(file.content.substring(0, spliceIndex));
   });
   // 添加用户对话信息，并进行发送
   addUserMessage(userInput.value.trim(), sendImages, imagesDesc).then(() => {

@@ -37,6 +37,7 @@ export type GenerateChatCompletionResponse = {
   prompt_eval_duration: number;
   eval_count: number;
   eval_duration: number;
+  error: string;
 };
 
 /**
@@ -224,36 +225,50 @@ export const useApi = () => {
     request: GenerateChatCompletionRequest,
     onDataReceived: (data: GenerateChatCompletionResponse) => void
   ): Promise<GenerateChatCompletionResponse[]> => {
-    const response = await fetch(getApiUrl("/chat"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-      signal: signal.value,
-    });
+    try {
+      const response = await fetch(getApiUrl("/chat"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+        signal: signal.value,
+      });
 
-    if (!response.ok) {
-      throw new Error("network error");
-    }
+      if (!response.ok) {
+        response.text().then((text) => {
+          onDataReceived({
+            error: JSON.parse(text)?.error,
+          });
+        });
 
-    const reader = response.body?.getReader();
-    let results: GenerateChatCompletionResponse[] = [];
-    if (reader) {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          break;
-        }
-
-        const chunk = new TextDecoder().decode(value);
-        const parsedChunk: GenerateChatCompletionResponse = JSON.parse(chunk);
-        onDataReceived(parsedChunk);
-        results.push(parsedChunk);
+        throw new Error("generateChatCompletion error");
       }
-    }
 
-    return results;
+      const reader = response.body?.getReader();
+      let results: GenerateChatCompletionResponse[] = [];
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+
+          const chunk = new TextDecoder().decode(value);
+          const parsedChunk: GenerateChatCompletionResponse = JSON.parse(chunk);
+          onDataReceived(parsedChunk);
+          results.push(parsedChunk);
+        }
+      }
+
+      return results;
+    } catch (error) {
+      onDataReceived({
+        error: error,
+      });
+
+      throw new Error(`generateChatCompletion error: ${error}`);
+    }
   };
 
   /**

@@ -23,7 +23,8 @@ export const useAI = () => {
     model: string,
     messages: Record<ChatMessage>,
     onMessage?: (data: GenerateChatCompletionResponse) => void,
-    onDone?: (isStream: boolean, data: GenerateChatCompletionResponse) => void
+    onDone?: (isStream: boolean, data: GenerateChatCompletionResponse) => void,
+    onError?: (errorText: string) => void
   ) => {
     // 模型参数
     const options = {
@@ -42,9 +43,16 @@ export const useAI = () => {
     };
 
     await generateChatCompletion(request, (data: GenerateChatCompletionResponse) => {
+      // 是否有报错信息
+      if (data.error) {
+        onError(data.error);
+        return;
+      }
+
       // 非流式处理，一次性获取到了最终回复
       if (!request.stream && data.done && onDone) {
         onDone(false, data as GenerateChatCompletionResponse);
+        return;
       }
 
       // 流式处理

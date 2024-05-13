@@ -50,7 +50,7 @@ export default {
         seed: "seed",
         topK: "top_k",
         topP: "top_p",
-        uploadImagesLimit: "upload file limit"
+        uploadImagesLimit: "upload file limit",
       },
     },
     chatInput: {
@@ -157,6 +157,9 @@ export default {
           minMax: "the content cannot exceed 4000 characters",
         },
       },
+    },
+    chatUtils: {
+      generateChatError: "chat error",
     },
   },
 };

@@ -50,7 +50,7 @@ export default {
         seed: "seed配置",
         topK: "top_k配置",
         topP: "top_p配置",
-        uploadImagesLimit: "文件上传限制"
+        uploadImagesLimit: "文件上传限制",
       },
     },
     chatInput: {
@@ -157,6 +157,9 @@ export default {
           minMax: "内容不能超过4000个字符",
         },
       },
+    },
+    chatUtils: {
+      generateChatError: "会话异常",
     },
   },
 };

@@ -5,6 +5,9 @@
 
 ![](./public/readMeImages/1.png)
 ![](./public/readMeImages/2.png)
+![](./public/readMeImages/3.png)
+![](./public/readMeImages/4.png)
+![](./public/readMeImages/5.png)
 
 ## install and use ollama
 

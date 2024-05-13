@@ -5,6 +5,7 @@ import { Chat, Message } from "./database/indexDB.ts";
 import { dbLayer } from "./indexDBUtils.ts";
 import { useAI } from "./api/useAI.ts";
 import { usePrompt } from "./promptUtils.ts";
+import { showNotification } from "./commonUtils.ts";
 import { GenerateChatCompletionResponse, useApi } from "./api/useApi.ts";
 import { withHistory } from "./database/localStorage.ts";
 
@@ -35,6 +36,9 @@ const isAiResponding = ref(false);
 
 // 118n对象
 const { t } = i18n.global;
+
+// 通知信息
+const { warning } = showNotification();
 
 /**
  * 开始会话
@@ -238,7 +242,8 @@ export function useChats() {
         activeChat.value.model,
         sendMessages,
         (data: GenerateChatCompletionResponse) => handleGenerateChatOnMessage(data, currentChatId),
-        (isStream: boolean, data: GenerateChatCompletionResponse) => handleGenerateChatOnDone(isStream, data, currentChatId)
+        (isStream: boolean, data: GenerateChatCompletionResponse) => handleGenerateChatOnDone(isStream, data, currentChatId),
+        (errorText: string) => handleGenerateChatOnError(errorText)
       );
     } catch (error) {
       if (error instanceof Error) {
@@ -351,6 +356,14 @@ export function useChats() {
     } else {
       console.error("no message need handle");
     }
+  };
+
+  /**
+   * 处理异常响应
+   */
+  const handleGenerateChatOnError = (errorText: string = "invoke error") => {
+    isAiResponding.value = false;
+    warning(`${t("chatUtils.generateChatError")}: ${errorText}`);
   };
 
   /**
