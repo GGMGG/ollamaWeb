@@ -1,4 +1,5 @@
-import { db, Chat, Message, Prompt } from "./database/indexDB.ts";
+import { Chat, Message, Prompt } from "../type/TIndexDB.ts";
+import { db } from "../database/indexDB.ts";
 
 /**
  * indexdb操作

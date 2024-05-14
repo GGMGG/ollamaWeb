@@ -47,13 +47,12 @@
 import { ref, onMounted } from "vue";
 import { Delete } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
-
 // 脚本引入
-import { useChats } from "../../utils/chatUtils.ts";
-import { useAI } from "../../utils/api/useAI.ts";
-import { formatDate } from "../../utils/commonUtils.ts";
+import { useChats } from "../../plugins/utils/chatUtils.ts";
+import { useAI } from "../../plugins/api/useAI.ts";
+import { formatDate } from "../../plugins/utils/commonUtils.ts";
 // 数据引入
-import { isDarkMode } from "../../utils/database/localStorage.ts";
+import { isDarkMode } from "../../plugins//database/localStorage.ts";
 
 // 定义props
 const props = defineProps({

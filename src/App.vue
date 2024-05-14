@@ -11,10 +11,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 // 脚本引入
-import { useApi } from "./utils/api/useApi.ts";
-import { isUrlValid } from "./utils/commonUtils.ts";
+import { useApi } from "./plugins/api/useApi.ts";
+import { isUrlValid } from "./plugins/utils/commonUtils.ts";
 // 数据引入
-import { isDarkMode } from "./utils/database/localStorage.ts";
+import { isDarkMode } from "./plugins/database/localStorage.ts";
 // 组件引入
 import Sidebar from "./components/layout/Sidebar.vue";
 import Settings from "./components/layout/Settings.vue";

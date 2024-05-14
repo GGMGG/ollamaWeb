@@ -8,9 +8,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, onUpdated, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-
 // 脚本引入
-import { useChats } from "../../utils/chatUtils.ts";
+import { useChats } from "../../plugins/utils/chatUtils.ts";
 // 组件引入
 import ChatMessage from "./ChatMessage.vue";
 

@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 // 数据引入
-import { isDarkMode } from "../../utils/database/localStorage.ts";
+import { isDarkMode } from "../../plugins/database/localStorage.ts";
 // 对象类型引入
-import { Message } from "../../utils/database/indexDB.ts";
+import { Message } from "../../plugins/type/TIndexDB.ts";
 
 // 定义消息对象
 const { message } = defineProps<{

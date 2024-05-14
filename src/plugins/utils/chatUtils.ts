@@ -1,13 +1,13 @@
 import { computed, ref } from "vue";
-
 import i18n from "../locale/index.ts";
-import { Chat, Message } from "./database/indexDB.ts";
+import { Chat, Message } from "../type/TIndexDB.ts";
+import { GenerateChatCompletionResponse } from "../type/TApi.ts";
+import { withHistory } from "../database/localStorage.ts";
+import { useAI } from "../api/useAI.ts";
+import { useApi } from "../api/useApi.ts";
 import { dbLayer } from "./indexDBUtils.ts";
-import { useAI } from "./api/useAI.ts";
 import { usePrompt } from "./promptUtils.ts";
 import { showNotification } from "./commonUtils.ts";
-import { GenerateChatCompletionResponse, useApi } from "./api/useApi.ts";
-import { withHistory } from "./database/localStorage.ts";
 
 /**
  * 全部对话对象

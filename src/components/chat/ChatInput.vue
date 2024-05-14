@@ -59,14 +59,13 @@ import { computed, ref } from "vue";
 import { useTextareaAutosize } from "@vueuse/core";
 import { Loading, Position, Picture, Delete } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
-
 // 图标引入
 import stop from "../../assets/svg/stop.svg";
 // 脚本引入
-import { useChats } from "../../utils/chatUtils.ts";
-import { showMessage, getBase64 } from "../../utils/commonUtils.ts";
+import { useChats } from "../../plugins/utils/chatUtils.ts";
+import { showMessage, getBase64 } from "../../plugins/utils/commonUtils.ts";
 // 数据引入
-import { isDarkMode, uploadImagesLimit } from "../../utils/database/localStorage.ts";
+import { isDarkMode, uploadImagesLimit } from "../../plugins/database/localStorage.ts";
 
 // 定义emit
 const emit = defineEmits<{}>();
@@ -217,8 +216,8 @@ defineExpose({
 
 <style lang="less" scoped>
 .chat-input {
-  width: 80%;
-  margin-left: 10%;
+  width: 90%;
+  margin-left: 5%;
 
   .chat-stop-box-div {
     width: 100%;

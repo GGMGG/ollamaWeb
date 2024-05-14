@@ -5,7 +5,7 @@ export const language = useLocalStorage("language", "zh");
 // 暗黑模式
 export const isDarkMode = useLocalStorage("isDarkMode", false);
 // ollama API地址
-export const baseUrl = useLocalStorage("baseUrl", "http://localhost:11434/api");
+export const baseUrl = useLocalStorage("baseUrl", "http://localhost:11434");
 // 是否流式处理响应
 export const isStream = useLocalStorage("isStream", false);
 // 是否携带历史记录

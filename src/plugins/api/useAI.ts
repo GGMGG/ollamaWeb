@@ -1,6 +1,7 @@
 import { ref } from "vue";
-import { ChatMessage, GenerateChatCompletionResponse, PullModelResponse, Model, useApi } from "./useApi.ts";
+import { ChatMessage, GenerateChatCompletionResponse, Model } from "../type/TApi.ts";
 import { isStream, numCtx, seed, topK, topP } from "../database/localStorage.ts";
+import { useApi } from "./useApi.ts";
 
 /**
  * 可用的模型列表
@@ -12,9 +13,9 @@ const availableModels = ref<Model[]>([]);
  */
 export const useAI = () => {
   /**
-   * 生成会话，模型列表，获取模型，删除模型
+   * 生成会话，模型列表
    */
-  const { generateChatCompletion, listLocalModels, pullModel } = useApi();
+  const { generateChatCompletion, listLocalModels } = useApi();
 
   /**
    * 生成对话
@@ -72,6 +73,7 @@ export const useAI = () => {
   const refreshModels = async () => {
     const response = await listLocalModels();
     availableModels.value = response.models;
+    availableModels.value.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
   };
 
   return {

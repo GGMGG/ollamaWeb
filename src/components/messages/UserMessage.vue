@@ -18,9 +18,9 @@ import { useI18n } from "vue-i18n";
 // 图标引入
 import avatar from "../../assets/avatar.png";
 // 数据引入
-import { isDarkMode } from "../../utils/database/localStorage.ts";
+import { isDarkMode } from "../../plugins/database/localStorage.ts";
 // 对象类型引入
-import { Message } from "../../utils/database/indexDB.ts";
+import { Message } from "../../plugins/type/TIndexDB.ts";
 // 组件引入
 import Markdown from "./Markdown.ts";
 

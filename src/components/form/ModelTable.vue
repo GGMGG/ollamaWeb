@@ -24,11 +24,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-
 // 脚本引入
-import { useAI } from "../../utils/api/useAI.ts";
-import { showNotification } from "../../utils/commonUtils.ts";
-import { useApi } from "../../utils/api/useApi.ts";
+import { useAI } from "../../plugins/api/useAI.ts";
+import { useApi } from "../../plugins/api/useApi.ts";
+import { showNotification } from "../../plugins/utils/commonUtils.ts";
 
 // 118n对象
 const { t, locale } = useI18n();

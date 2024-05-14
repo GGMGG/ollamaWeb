@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 // 类型对象引入
-import { Message } from "../../utils/database/indexDB.ts";
+import { Message } from "../../plugins/type/TIndexDB.ts";
 // 组件引入
 import SystemMessage from "../messages/SystemMessage.vue";
 import UserMessage from "../messages/UserMessage.vue";

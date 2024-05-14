@@ -1,19 +1,11 @@
 import { ref } from "vue";
-
 import i18n from "../locale/index.ts";
-import { Prompt } from "./database/indexDB.ts";
+import { Prompt } from "../type/TIndexDB.ts";
+import { PromptResponse } from "../type/TPrompt.ts";
 import { dbLayer } from "./indexDBUtils.ts";
 
 // 118n对象
 const { t } = i18n.global;
-
-/**
- * 提示词返回结果
- */
-export interface PromptResponse {
-  success: boolean;
-  prompt: Prompt;
-}
 
 /**
  * 全部提示词对象
@@ -133,6 +125,6 @@ export function usePrompt() {
     updatePrompt,
     deletePrompt,
     clearPrompts,
-    refreshPrompts
+    refreshPrompts,
   };
 }

@@ -1,175 +1,28 @@
 import { ref } from "vue";
+import {
+  GenerateChatCompletionRequest,
+  GenerateChatCompletionResponse,
+  CreateModelRequest,
+  CreateModelResponse,
+  ListLocalModelsResponse,
+  ShowModelInformationRequest,
+  ShowModelInformationResponse,
+  CopyModelRequest,
+  CopyModelResponse,
+  DeleteModelRequest,
+  DeleteModelResponse,
+  PullModelRequest,
+  PullModelResponse,
+  PushModelRequest,
+  PushModelResponse,
+  GenerateEmbeddingsRequest,
+  GenerateEmbeddingsResponse,
+} from "../type/TApi";
+import { Message } from "../type/TIndexDB.ts";
 import { baseUrl } from "../database/localStorage.ts";
-import { Message } from "../database/indexDB.ts";
-
-/**
- * chat message结构
- */
-export interface ChatMessage {
-  role: string;
-  content: string;
-  images?: Record<string>;
-}
-
-/**
- * 生成会话请求
- */
-export type GenerateChatCompletionRequest = {
-  model: string;
-  messages: Record<ChatMessage>;
-  format: string;
-  options?: Record<string, any>;
-  stream?: boolean;
-  keep_alive?: number;
-};
-
-/**
- * 生成会话响应
- */
-export type GenerateChatCompletionResponse = {
-  model: string;
-  created_at: string;
-  message: ChatMessage;
-  done: boolean;
-  total_duration: number;
-  load_duration: number;
-  prompt_eval_count: number;
-  prompt_eval_duration: number;
-  eval_count: number;
-  eval_duration: number;
-  error: string;
-};
-
-/**
- * 创建模型请求
- */
-export type CreateModelRequest = {
-  name: string;
-  path: string;
-};
-
-/**
- * 创建模型响应
- */
-export type CreateModelResponse = {
-  status: string;
-};
-
-/**
- * 模型
- */
-export type Model = {
-  name: string;
-  modified_at: string;
-  size: number;
-};
-
-/**
- * 模型列表
- */
-export type ListLocalModelsResponse = {
-  models: Model[];
-};
-
-/**
- * 模型详情请求
- */
-export type ShowModelInformationRequest = {
-  name: string;
-};
-
-/**
- * 模型详情响应
- */
-export type ShowModelInformationResponse = {
-  license: string;
-  modelfile: string;
-  parameters: string;
-  template: string;
-};
-
-/**
- * 复制模型请求
- */
-export type CopyModelRequest = {
-  source: string;
-  destination: string;
-};
-
-/**
- * 复制模型响应
- */
-export type CopyModelResponse = {
-  status: string;
-};
-
-/**
- * 删除模型请求
- */
-export type DeleteModelRequest = {
-  name: string;
-};
-
-/**
- * 删除模型响应
- */
-export type DeleteModelResponse = {
-  status: string;
-};
-
-/**
- * 获取模型请求
- */
-export type PullModelRequest = {
-  name: string;
-  insecure?: boolean;
-  stream?: boolean;
-};
-
-/**
- * 获取模型响应
- */
-export type PullModelResponse = {
-  status: string;
-  digest: string;
-  total: number;
-  completed: number;
-  error: string;
-};
-
-/**
- * 推送模型请求
- */
-export type PushModelRequest = {
-  name: string;
-  insecure?: boolean;
-};
-
-/**
- * 推送模型相关
- */
-export type PushModelResponse = {
-  status: string;
-};
-
-/**
- * 文本嵌入请求
- */
-export type GenerateEmbeddingsRequest = {
-  model: string;
-  prompt: string;
-  options?: Record<string, any>;
-};
-
-/**
- * 文本嵌入响应
- */
-export type GenerateEmbeddingsResponse = {
-  embeddings: number[];
-};
 
 // ollama api url
-const getApiUrl = (path: string) => `${baseUrl.value || "http://localhost:11434/api"}${path}`;
+const getApiUrl = (path: string) => `${baseUrl.value || "http://localhost:11434"}${path}`;
 // 终止控制器
 const abortController = ref<AbortController>(new AbortController());
 // signal
@@ -187,13 +40,13 @@ export const useApi = () => {
   /**
    * api url
    */
-  const apiUrl = getApiUrl("/tags");
+  const apiUrl = getApiUrl("/api/tags");
 
   /**
    * 模型列表
    */
   const listLocalModels = async (): Promise<ListLocalModelsResponse> => {
-    const response = await fetch(getApiUrl("/tags"), {
+    const response = await fetch(getApiUrl("/api/tags"), {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -207,7 +60,7 @@ export const useApi = () => {
    * 获取模型详情
    */
   const showModelInformation = async (request: ShowModelInformationRequest): Promise<ShowModelInformationResponse> => {
-    const response = await fetch(getApiUrl("/show"), {
+    const response = await fetch(getApiUrl("/api/show"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -226,7 +79,7 @@ export const useApi = () => {
     onDataReceived: (data: GenerateChatCompletionResponse) => void
   ): Promise<GenerateChatCompletionResponse[]> => {
     try {
-      const response = await fetch(getApiUrl("/chat"), {
+      const response = await fetch(getApiUrl("/api/chat"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -275,7 +128,7 @@ export const useApi = () => {
    * 创建模型
    */
   const createModel = async (request: CreateModelRequest): Promise<CreateModelResponse> => {
-    const response = await fetch(getApiUrl("/create"), {
+    const response = await fetch(getApiUrl("/api/create"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -290,7 +143,7 @@ export const useApi = () => {
    * 复制模型
    */
   const copyModel = async (request: CopyModelRequest): Promise<CopyModelResponse> => {
-    const response = await fetch(getApiUrl("/copy"), {
+    const response = await fetch(getApiUrl("/api/copy"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -305,7 +158,7 @@ export const useApi = () => {
    * 删除模型
    */
   const deleteModel = async (request: DeleteModelRequest): Promise<DeleteModelResponse> => {
-    const response = await fetch(getApiUrl("/delete"), {
+    const response = await fetch(getApiUrl("/api/delete"), {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -324,7 +177,7 @@ export const useApi = () => {
    * 获取模型
    */
   const pullModel = async (request: PullModelRequest): Promise<PullModelResponse[]> => {
-    const response = await fetch(getApiUrl("/pull"), {
+    const response = await fetch(getApiUrl("/api/pull"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -363,7 +216,7 @@ export const useApi = () => {
    * 推送模型
    */
   const pushModel = async (request: PushModelRequest): Promise<PushModelResponse> => {
-    const response = await fetch(getApiUrl("/push"), {
+    const response = await fetch(getApiUrl("/api/push"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -378,7 +231,7 @@ export const useApi = () => {
    * 文本嵌入
    */
   const generateEmbeddings = async (request: GenerateEmbeddingsRequest): Promise<GenerateEmbeddingsResponse> => {
-    const response = await fetch(getApiUrl("/embeddings"), {
+    const response = await fetch(getApiUrl("/api/embeddings"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -21,10 +21,9 @@
 import { ref, onMounted, watch } from "vue";
 import { Refresh } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
-
 // 脚本引入
-import { useChats } from "../../utils/chatUtils.ts";
-import { useAI } from "../../utils/api/useAI.ts";
+import { useAI } from "../../plugins/api/useAI.ts";
+import { useChats } from "../../plugins/utils/chatUtils.ts";
 
 // 118n对象
 const { t, locale } = useI18n();

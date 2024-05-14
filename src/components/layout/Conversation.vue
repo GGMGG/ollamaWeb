@@ -38,15 +38,14 @@
 import { onMounted, ref } from "vue";
 import { Edit } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
-
 // 脚本引入
-import { useAI } from "../../utils/api/useAI.ts";
-import { useApi } from "../../utils/api/useApi.ts";
-import { useChats } from "../../utils/chatUtils.ts";
-import { usePrompt } from "../../utils/promptUtils.ts";
-import { showMessage, isUrlValid } from "../../utils/commonUtils.ts";
+import { useAI } from "../../plugins/api/useAI.ts";
+import { useApi } from "../../plugins/api/useApi.ts";
+import { useChats } from "../../plugins/utils/chatUtils.ts";
+import { usePrompt } from "../../plugins/utils/promptUtils.ts";
+import { showMessage, isUrlValid } from "../../plugins/utils/commonUtils.ts";
 // 数据引入
-import { isDarkMode } from "../../utils/database/localStorage.ts";
+import { isDarkMode } from "../../plugins/database/localStorage.ts";
 // 组件引入
 import ChatInput from "../chat/ChatInput.vue";
 import ChatMessages from "../chat/ChatMessages.vue";

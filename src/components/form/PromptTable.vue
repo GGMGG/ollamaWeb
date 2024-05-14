@@ -71,10 +71,9 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
-
 // 脚本引入
-import { usePrompt } from "../../utils/promptUtils.ts";
-import { showNotification } from "../../utils/commonUtils.ts";
+import { usePrompt } from "../../plugins/utils/promptUtils.ts";
+import { showNotification } from "../../plugins/utils/commonUtils.ts";
 
 // 118n对象
 const { t, locale } = useI18n();

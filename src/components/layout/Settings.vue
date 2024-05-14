@@ -96,17 +96,18 @@ import { ref, onMounted } from "vue";
 import { ElMessageBox } from "element-plus";
 import { Moon, Sunny } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
-
 // 图标引入
 import github from "../../assets/svg/github.svg";
 import githubDark from "../../assets/svg/githubDark.svg";
+// 对象类型引入
+import { PullModelResponse } from "../../plugins/type/TApi.ts";
 // 脚本引入
-import { useChats } from "../../utils/chatUtils.ts";
-import { useAI } from "../../utils/api/useAI.ts";
-import { PullModelResponse, useApi } from "../../utils/api/useApi.ts";
-import { showNotification } from "../../utils/commonUtils.ts";
+import { useChats } from "../../plugins/utils/chatUtils.ts";
+import { useAI } from "../../plugins/api/useAI.ts";
+import { useApi } from "../../plugins/api/useApi.ts";
+import { showNotification } from "../../plugins/utils/commonUtils.ts";
 // 数据引入
-import { language, isDarkMode, baseUrl, isStream, withHistory, numCtx, seed, topK, topP, uploadImagesLimit } from "../../utils/database/localStorage.ts";
+import { language, isDarkMode, baseUrl, isStream, withHistory, numCtx, seed, topK, topP, uploadImagesLimit } from "../../plugins/database/localStorage.ts";
 import { languageTypes } from "../../config/languaguConfig.ts";
 import { globalConfig } from "../../config/globalConfig.ts";
 // 组件引入

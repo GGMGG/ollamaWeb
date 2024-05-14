@@ -1,6 +1,6 @@
 import { createI18n } from "vue-i18n";
 // 数据引入
-import { language as localeLanguage } from "../utils/database/localStorage.ts";
+import { language as localeLanguage } from "../database/localStorage.ts";
 // 配置好的语言文件
 import messages from "./language/index.ts";
 
