@@ -21,12 +21,15 @@
       </el-row>
       <el-row class="conversation-container-active-footer">
         <el-col :span="22">
-          <ChatInput ref="userChatInput"/>
+          <ChatInput ref="userChatInput" />
         </el-col>
       </el-row>
     </div>
     <div v-else-if="!available" class="conversation-container-empty">
       <el-empty :description="t('conversation.apiUnAvailable')" />
+      <el-button @click="checkUrlIsValid" class="conversation-container-empty-btn" type="primary" size="large">
+        <el-text class="mx-1" size="large">{{ t("conversation.refreshBtnText") }}</el-text>
+      </el-button>
     </div>
     <div v-else class="conversation-container-empty">
       <el-empty :description="t('conversation.needCreateNewChat')" />
@@ -118,9 +121,9 @@ const copyUserMesaage = (content: string) => {
 };
 
 /**
- * onMounted
+ * 验证ollamaApi地址是否可用
  */
-onMounted(() => {
+const checkUrlIsValid = () => {
   isUrlValid(apiUrl).then((result) => {
     if (result) {
       available.value = true;
@@ -136,6 +139,13 @@ onMounted(() => {
       refreshPrompts().then(async () => {});
     }
   });
+};
+
+/**
+ * onMounted
+ */
+onMounted(() => {
+  checkUrlIsValid();
 });
 </script>
 
@@ -217,6 +227,33 @@ onMounted(() => {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  .conversation-container-empty {
+    text-align: center;
+
+    :deep .el-empty__description p {
+      font-size: 28px;
+    }
+
+    .conversation-container-empty-btn {
+      border-radius: 8px;
+      background: #2454ff;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+
+    .conversation-container-empty-btn:hover {
+      background: #163ecd;
+    }
+
+    .mx-1 {
+      font-family: PingFang SC;
+      font-style: normal;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 1px;
     }
   }
 }

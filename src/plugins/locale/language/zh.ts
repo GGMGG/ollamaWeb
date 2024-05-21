@@ -17,6 +17,7 @@ export default {
       apiUnAvailable: "api地址连接失败，请确认配置",
       needCreateNewChat: "请先新建对话",
       confirmReNameText: "请输入对话名称",
+      refreshBtnText: "刷新重试",
     },
     settings: {
       btns: {

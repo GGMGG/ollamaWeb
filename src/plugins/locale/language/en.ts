@@ -17,6 +17,7 @@ export default {
       apiUnAvailable: "API address connection failed, please confirm the configuration",
       needCreateNewChat: "please start a new conversation first",
       confirmReNameText: "please enter the conversation name",
+      refreshBtnText: "refresh and retry",
     },
     settings: {
       btns: {
