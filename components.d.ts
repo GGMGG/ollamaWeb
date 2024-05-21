@@ -38,6 +38,7 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElRowv: typeof import("element-plus/es")["ElRowv"]
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElSlider: typeof import('element-plus/es')['ElSlider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
@@ -56,6 +57,7 @@ declare module 'vue' {
     TextArea: typeof import('./src/components/form/TextArea.vue')['default']
     TextInput: typeof import('./src/components/form/TextInput.vue')['default']
     TextRadio: typeof import('./src/components/form/TextRadio.vue')['default']
+    TextSlider: typeof import('./src/components/form/TextSlider.vue')['default']
     UserMessage: typeof import('./src/components/messages/UserMessage.vue')['default']
   }
 }
