@@ -145,6 +145,8 @@ const { refreshModels } = useAI();
 const { pullModel } = useApi();
 // 通知信息
 const { success, warning, error } = showNotification();
+// 数学计算
+const { divide } = math();
 // 获取模型按钮是否可用
 const pullModelBtnDisabled = ref(false);
 // 获取模型按钮是否loading
@@ -248,7 +250,7 @@ const handlePullError = (data: PullModelResponse) => {
 const handlePulling = (data: PullModelResponse) => {
   nowPullModelPart.value = data.status;
   if (data.digest && data.completed >= 0 && data.total > 0) {
-    nowPullModelPercentage.value = (math.divide(data.completed, data.total) * 100).toFixed(2);
+    nowPullModelPercentage.value = (divide(data.completed, data.total) * 100).toFixed(2);
   } else {
     nowPullModelPercentage.value = 0;
   }

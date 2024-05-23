@@ -80,24 +80,42 @@ export const isDecimal = (num: number) => {
 /**
  * mathjs封装
  */
-export const math = {
-  // ti + t2
-  add(t1 = 0, t2 = 0) {
-    return $math.format($math.add($math.bignumber(t1), $math.bignumber(t2)))
-  },
-  // ti - t2
-  subtract(t1 = 0, t2 = 0) {
-    return $math.format($math.subtract($math.bignumber(t1), $math.bignumber(t2)))
-  },
-  // ti X t2
-  multiply(t1 = 0, t2 = 0) {
-    return $math.format($math.multiply($math.bignumber(t1), $math.bignumber(t2)))
-  },
-  // ti / t2
-  divide(t1 = 0, t2 = 0) {
-    return $math.format($math.divide($math.bignumber(t1), $math.bignumber(t2)))
-  }
-}
+export const math = () => {
+  /**
+   * ti + t2
+   */
+  const add = (t1 = 0, t2 = 0) => {
+    return $math.format($math.add($math.bignumber(t1), $math.bignumber(t2)));
+  };
+
+  /**
+   * ti - t2
+   */
+  const subtract = (t1 = 0, t2 = 0) => {
+    return $math.format($math.subtract($math.bignumber(t1), $math.bignumber(t2)));
+  };
+
+  /**
+   * ti X t2
+   */
+  const multiply = (t1 = 0, t2 = 0) => {
+    return $math.format($math.multiply($math.bignumber(t1), $math.bignumber(t2)));
+  };
+
+  /**
+   * ti / t2
+   */
+  const divide = (t1 = 0, t2 = 0) => {
+    return $math.format($math.divide($math.bignumber(t1), $math.bignumber(t2)));
+  };
+
+  return {
+    add,
+    subtract,
+    multiply,
+    divide,
+  };
+};
 
 /**
  * elmessage二次封装
