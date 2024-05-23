@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { ElMessage, ElNotification } from "element-plus";
+import * as $math from "mathjs";
 import i18n from "../locale/index.ts";
 
 // 118n对象
@@ -68,6 +69,35 @@ export const getBase64 = (file: any) => {
     };
   });
 };
+
+/**
+ * 判断是否小数
+ */
+export const isDecimal = (num: number) => {
+  return !isNaN(parseFloat(num)) && isFinite(num) && !Number.isInteger(num);
+};
+
+/**
+ * mathjs封装
+ */
+export const math = {
+  // ti + t2
+  add(t1 = 0, t2 = 0) {
+    return $math.format($math.add($math.bignumber(t1), $math.bignumber(t2)))
+  },
+  // ti - t2
+  subtract(t1 = 0, t2 = 0) {
+    return $math.format($math.subtract($math.bignumber(t1), $math.bignumber(t2)))
+  },
+  // ti X t2
+  multiply(t1 = 0, t2 = 0) {
+    return $math.format($math.multiply($math.bignumber(t1), $math.bignumber(t2)))
+  },
+  // ti / t2
+  divide(t1 = 0, t2 = 0) {
+    return $math.format($math.divide($math.bignumber(t1), $math.bignumber(t2)))
+  }
+}
 
 /**
  * elmessage二次封装

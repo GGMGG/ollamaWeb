@@ -53,6 +53,7 @@ export default {
         topP: "top_p",
         uploadImagesLimit: "upload file limit",
       },
+      pullModelMsg: "model download progress"
     },
     chatInput: {
       stopChat: "stop generating",

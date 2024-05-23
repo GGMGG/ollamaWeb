@@ -53,6 +53,7 @@ export default {
         topP: "top_p配置",
         uploadImagesLimit: "文件上传限制",
       },
+      pullModelMsg: "模型下载进度"
     },
     chatInput: {
       stopChat: "停止生成",

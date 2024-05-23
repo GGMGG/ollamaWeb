@@ -80,6 +80,17 @@
         </el-col>
       </el-row>
     </div>
+    <!-- 模型下载进度提示面板 -->
+    <div class="right-pull-model-progress-div" v-if="isPullingModel">
+      <el-card class="right-pull-model-progress-card" shadow="always">
+        <el-text class="mx-1" size="large">{{ t("settings.pullModelMsg") }}</el-text>
+        <br />
+        <el-text class="mx-1" size="large">{{ nowPullModelName }}</el-text>
+        <br />
+        <el-text class="mx-1" size="large">{{ nowPullModelPart }}</el-text>
+        <el-progress class="right-pull-model-progress" :percentage="nowPullModelPercentage" :stroke-width="18" :duration="10" :color="`#2454ff`" striped striped-flow />
+      </el-card>
+    </div>
   </div>
   <!-- 全部模型抽屉 -->
   <el-drawer v-model="modelTableVisiable" direction="rtl" :show-close="false" size="26%">
@@ -105,7 +116,7 @@ import { PullModelResponse } from "../../plugins/type/TApi.ts";
 import { useChats } from "../../plugins/utils/chatUtils.ts";
 import { useAI } from "../../plugins/api/useAI.ts";
 import { useApi } from "../../plugins/api/useApi.ts";
-import { showNotification } from "../../plugins/utils/commonUtils.ts";
+import { showNotification, math } from "../../plugins/utils/commonUtils.ts";
 // 数据引入
 import { language, isDarkMode, baseUrl, isStream, withHistory, numCtx, seed, topK, topP, uploadImagesLimit } from "../../plugins/database/localStorage.ts";
 import { languageTypes } from "../../config/languaguConfig.ts";
@@ -142,6 +153,14 @@ const pullModelBtnLoading = ref(false);
 const modelTableVisiable = ref(false);
 // 提示词列表是否可见
 const promptTableVisiable = ref(false);
+// 是否正在下载模型
+const isPullingModel = ref(false);
+// 当前下载的模型名称
+const nowPullModelName = ref("");
+// 下载的模型分段
+const nowPullModelPart = ref("");
+// 下载的模型进度
+const nowPullModelPercentage = ref(0);
 
 /**
  * 暗黑/明亮模式切换
@@ -183,26 +202,35 @@ const doPullModel = () => {
     .then(({ value }) => {
       pullModelBtnDisabled.value = true;
       pullModelBtnLoading.value = true;
-      // 请求参数
-      const request = { name: value };
-      pullModel(request).then((data) => {
-        if (data.error) {
-          handlePullError(data);
-        } else if (data.status !== "success") {
-          handlePulling(data);
-        } else if (data.status === "success") {
-          handlePullDone(data);
-        }
-
-        pullModelBtnDisabled.value = false;
-        pullModelBtnLoading.value = false;
-        refreshModels();
-      });
+      isPullingModel.value = true;
+      nowPullModelName.value = value;
+      invokePullModel({ name: value, stream: true });
     })
     .catch(() => {
-      pullModelBtnDisabled.value = false;
-      pullModelBtnLoading.value = false;
+      resetPullModelParams();
     });
+};
+
+/**
+ * 执行获取模型
+ * @param params
+ */
+const invokePullModel = async (params: any) => {
+  await pullModel(params, (data: PullModelResponse) => {
+    if (data.error) {
+      handlePullError(data);
+      return;
+    }
+
+    if (data.status !== "success") {
+      handlePulling(data);
+      return;
+    }
+
+    if (data.status === "success") {
+      handlePullDone(data);
+    }
+  });
 };
 
 /**
@@ -218,7 +246,12 @@ const handlePullError = (data: PullModelResponse) => {
  * @param data
  */
 const handlePulling = (data: PullModelResponse) => {
-  console.log("handlePulling===", data);
+  nowPullModelPart.value = data.status;
+  if (data.digest && data.completed >= 0 && data.total > 0) {
+    nowPullModelPercentage.value = (math.divide(data.completed, data.total) * 100).toFixed(2);
+  } else {
+    nowPullModelPercentage.value = 0;
+  }
 };
 
 /**
@@ -226,8 +259,20 @@ const handlePulling = (data: PullModelResponse) => {
  * @param data
  */
 const handlePullDone = (data: PullModelResponse) => {
-  const msg = `sha256 digest: ${data.digest}`;
-  success(`${t("settings.btns.pullModel.pullSuccess")}`, msg);
+  resetPullModelParams();
+  refreshModels();
+  success(`${t("settings.btns.pullModel.pullSuccess")}`, `${data.status}`);
+};
+
+/**
+ * 重置获取模型相关参数
+ */
+const resetPullModelParams = () => {
+  pullModelBtnDisabled.value = false;
+  pullModelBtnLoading.value = false;
+  isPullingModel.value = false;
+  nowPullModelName.value = "";
+  nowPullModelPart.value = "";
 };
 
 /**
@@ -311,6 +356,30 @@ onMounted(() => {});
 
     .right-setting-form-input-wd9 {
       width: 90%;
+    }
+  }
+
+  .right-pull-model-progress-div {
+    width: 400px;
+    height: auto;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+
+    .right-pull-model-progress-card {
+      width: 100%;
+
+      .mx-1 {
+        font-family: PingFang SC;
+        font-style: normal;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 50px;
+      }
+    }
+
+    .right-pull-model-progress {
+      margin-top: 10px;
     }
   }
 }

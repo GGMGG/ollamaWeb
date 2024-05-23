@@ -176,39 +176,60 @@ export const useApi = () => {
   /**
    * 获取模型
    */
-  const pullModel = async (request: PullModelRequest): Promise<PullModelResponse[]> => {
-    const response = await fetch(getApiUrl("/api/pull"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-    });
+  const pullModel = async (request: PullModelRequest, onDataReceived: (data: GenerateChatCompletionResponse) => void): Promise<PullModelResponse[]> => {
+    try {
+      const response = await fetch(getApiUrl("/api/pull"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+      });
 
-    if (!response.ok) {
-      throw new Error("network error");
-    }
-
-    const contentType = response.headers.get("content-type");
-    if (contentType === "application/json") {
-      return await response.json();
-    } else {
-      // 非流式，一次性获取结果
-      return await response.text().then((result) => {
-        const resultArr = result.split("\n").filter((item) => item.length !== 0);
-        let pullResponse: PullModelResponse = {};
-        resultArr.forEach((result) => {
-          const resultJson = JSON.parse(result);
-          const keys = Object.keys(resultJson);
-          for (let i = 0; i < keys.length; i++) {
-            let key = keys[i];
-            let value = resultJson[key];
-            pullResponse[key] = value;
-          }
+      if (!response.ok) {
+        response.text().then((text) => {
+          onDataReceived({
+            error: JSON.parse(text)?.error,
+          });
         });
 
-        return pullResponse;
+        throw new Error("pullModel error");
+      }
+
+      const reader = response.body?.getReader();
+      let results: PullModelResponse[] = [];
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+
+          let parsedChunk: PullModelResponse = {};
+          const chunk = new TextDecoder().decode(value);
+          const resultArr = chunk.split("\n").filter((item) => item.length !== 0);
+          resultArr.forEach((result) => {
+            const resultJson = JSON.parse(result);
+            const keys = Object.keys(resultJson);
+            for (let i = 0; i < keys.length; i++) {
+              let key = keys[i];
+              let value = resultJson[key];
+              parsedChunk[key] = value;
+            }
+
+            onDataReceived(parsedChunk);
+            results.push(parsedChunk);
+          });
+        }
+      }
+
+      return results;
+    } catch (error) {
+      onDataReceived({
+        error: error,
       });
+
+      throw new Error(`pullModel error: ${error}`);
     }
   };
 
