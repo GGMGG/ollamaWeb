@@ -9,6 +9,9 @@
       <el-icon size="28" class="btns-icon" @click="openGitHub">
         <img :src="!isDarkMode ? github : githubDark" />
       </el-icon>
+      <el-icon size="28" class="btns-icon" @click="openOllamaLibrary">
+        <img :src="ollomaLogo" />
+      </el-icon>
     </div>
     <!-- 中间操作按钮 -->
     <div class="right-setting-action-btns-div">
@@ -110,6 +113,7 @@ import { useI18n } from "vue-i18n";
 // 图标引入
 import github from "../../assets/svg/github.svg";
 import githubDark from "../../assets/svg/githubDark.svg";
+import ollomaLogo from '../../assets/logo.png';
 // 对象类型引入
 import { PullModelResponse } from "../../plugins/type/TApi.ts";
 // 脚本引入
@@ -187,6 +191,15 @@ const openGitHub = () => {
     window.open(globalConfig.projectUrl || globalConfig.homepage, "_blank");
   }
 };
+
+/**
+ * 打卡ollama library地址
+ */
+const openOllamaLibrary = () => {
+  if (globalConfig.ollamaLibraryUrl) {
+    window.open(globalConfig.ollamaLibraryUrl, "_blank");
+  }
+}
 
 /**
  * 获取模型
@@ -293,7 +306,7 @@ onMounted(() => {});
     align-items: center;
 
     .btns-icon {
-      margin-left: 5px;
+      margin-left: 10px;
       cursor: pointer;
     }
 
